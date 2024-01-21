@@ -426,7 +426,7 @@ public class ChessPiece {
         int pieceRow = myPosition.getRow();
         int pieceCol = myPosition.getColumn();
         //east
-        for (int col = pieceRow+1; col <= 8; ++col) {
+        for (int col = pieceCol+1; col <= 8; ++col) {
             ChessPiece existingPiece = board.getPiece(new ChessPosition(pieceRow, col));
             if(existingPiece==null) {
                 moves.add(new ChessMove(new ChessPosition(pieceRow,pieceCol),
@@ -506,7 +506,7 @@ public class ChessPiece {
         int pieceRow = myPosition.getRow();
         int pieceCol = myPosition.getColumn();
         //west
-        for (int col = pieceRow-1; col >= 1; --col) {
+        for (int col = pieceCol-1; col >= 1; --col) {
             ChessPiece existingPiece = board.getPiece(new ChessPosition(pieceRow, col));
             if(existingPiece==null) {
                 moves.add(new ChessMove(new ChessPosition(pieceRow,pieceCol),
