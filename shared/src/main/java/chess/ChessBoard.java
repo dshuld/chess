@@ -12,6 +12,7 @@ public class ChessBoard {
 
     private ChessPiece[][] pieces;
 
+    //standard 8x8 chess board
     public ChessBoard() {
         pieces = new ChessPiece[8][8];
     }
@@ -64,17 +65,24 @@ public class ChessBoard {
     public void resetBoard() {
         for (int row = 1; row <= 8; ++row) {
             for (int col = 1; col <= 8; ++col) {
+                //set each value to null
                 pieces[row-1][col-1] = null;
+
+                //if the second row, set white pawns
                 if(row==2) {
                     addPiece(new ChessPosition(row, col),
                             new ChessPiece(ChessGame.TeamColor.WHITE, ChessPiece.PieceType.PAWN));
                 }
+
+                //if seventh row, set to black pawns
                 if(row==7) {
                     addPiece(new ChessPosition(row, col),
                             new ChessPiece(ChessGame.TeamColor.BLACK, ChessPiece.PieceType.PAWN));
                 }
             }
         }
+
+        //manually set white bottom row
         addPiece(new ChessPosition(1, 1), new ChessPiece(ChessGame.TeamColor.WHITE, ChessPiece.PieceType.ROOK));
         addPiece(new ChessPosition(1, 2), new ChessPiece(ChessGame.TeamColor.WHITE, ChessPiece.PieceType.KNIGHT));
         addPiece(new ChessPosition(1, 3), new ChessPiece(ChessGame.TeamColor.WHITE, ChessPiece.PieceType.BISHOP));
@@ -84,6 +92,7 @@ public class ChessBoard {
         addPiece(new ChessPosition(1, 7), new ChessPiece(ChessGame.TeamColor.WHITE, ChessPiece.PieceType.KNIGHT));
         addPiece(new ChessPosition(1, 8), new ChessPiece(ChessGame.TeamColor.WHITE, ChessPiece.PieceType.ROOK));
 
+        //manually set black top row
         addPiece(new ChessPosition(8, 1), new ChessPiece(ChessGame.TeamColor.BLACK, ChessPiece.PieceType.ROOK));
         addPiece(new ChessPosition(8, 2), new ChessPiece(ChessGame.TeamColor.BLACK, ChessPiece.PieceType.KNIGHT));
         addPiece(new ChessPosition(8, 3), new ChessPiece(ChessGame.TeamColor.BLACK, ChessPiece.PieceType.BISHOP));

@@ -11,7 +11,7 @@ import java.util.Objects;
  * signature of the existing methods.
  */
 public class ChessPiece {
-    
+
     private final ChessGame.TeamColor pieceColor;
     private final PieceType pieceType;
 
@@ -75,6 +75,7 @@ public class ChessPiece {
      * @return Collection of valid moves
      */
     public Collection<ChessMove> pieceMoves(ChessBoard board, ChessPosition myPosition) {
+        //call helper function for each piece type to evaluate possible moves
         switch (board.getPiece(myPosition).pieceType) {
             case KING -> {return kingPieceMoves(board, myPosition);}
             case QUEEN -> {return queenPieceMoves(board, myPosition);}
@@ -93,6 +94,7 @@ public class ChessPiece {
         int pieceRow = myPosition.getRow();
         int pieceCol = myPosition.getColumn();
 
+        //check each space in 3x3 centered on king, allow capture or empty space, don't allow off-board move
         for (int row = pieceRow-1; row <= pieceRow+1; ++row) {
             for (int col = pieceCol-1; col <= pieceCol+1; ++col) {
                 if ((row >= 1) && (row <= 8) && (col >= 1) && (col <= 8)) {
@@ -111,6 +113,7 @@ public class ChessPiece {
     private Collection<ChessMove> queenPieceMoves(ChessBoard board, ChessPosition myPosition) {
         Collection<ChessMove> moves = new ArrayList<>();
 
+        //call helper methods for cardinal directions and diagonals
         checkNorthMoves(moves, board, myPosition);
         checkEastMoves(moves, board, myPosition);
         checkSouthMoves(moves, board, myPosition);
@@ -126,6 +129,7 @@ public class ChessPiece {
     private Collection<ChessMove> rookPieceMoves(ChessBoard board, ChessPosition myPosition) {
         Collection<ChessMove> moves = new ArrayList<>();
 
+        //call helper functions for cardinal directions
         checkNorthMoves(moves, board, myPosition);
         checkEastMoves(moves, board, myPosition);
         checkSouthMoves(moves, board, myPosition);
@@ -137,6 +141,7 @@ public class ChessPiece {
     private Collection<ChessMove> bishopPieceMoves(ChessBoard board, ChessPosition myPosition) {
         Collection<ChessMove> moves = new ArrayList<>();
 
+        //call helper functions for diagonals
         checkNorthEastMoves(moves, board, myPosition);
         checkSouthEastMoves(moves, board, myPosition);
         checkSouthWestMoves(moves, board, myPosition);
@@ -150,6 +155,8 @@ public class ChessPiece {
         int pieceRow = myPosition.getRow();
         int pieceCol = myPosition.getColumn();
         ChessPiece existingPiece;
+
+        //manually check each potential location
 
         //north-most
         if (pieceRow+2 <= 8) {
@@ -237,6 +244,7 @@ public class ChessPiece {
         int pieceCol = myPosition.getColumn();
         ChessPiece existingPiece;
 
+        //white pawns
         if (board.getPiece(myPosition).getTeamColor() == ChessGame.TeamColor.WHITE) {
             if(pieceRow < 8) {
                 //one space forward
@@ -248,7 +256,7 @@ public class ChessPiece {
                     else {
                         addMove(moves, pieceRow, pieceCol, pieceRow+1, pieceCol);
                     }
-                    //two space forward (depends on one space forward)
+                    //two spaces forward (depends on one space forward)
                     if (pieceRow == 2) {
                         existingPiece = board.getPiece(new ChessPosition(pieceRow+2, pieceCol));
                         if (existingPiece == null) {
@@ -282,6 +290,7 @@ public class ChessPiece {
                 }
             }
         }
+        //black pawns
         else {
             if(pieceRow > 1) {
                 //one space forward
@@ -293,7 +302,7 @@ public class ChessPiece {
                     else {
                         addMove(moves, pieceRow, pieceCol, pieceRow-1, pieceCol);
                     }
-                    //two space forward (depends on one space forward)
+                    //two spaces forward (depends on one space forward)
                     if (pieceRow == 7) {
                         existingPiece = board.getPiece(new ChessPosition(pieceRow-2, pieceCol));
                         if (existingPiece == null) {
@@ -497,6 +506,7 @@ public class ChessPiece {
                     new ChessPosition(endRow, endCol), PieceType.KNIGHT));
         }
         else {
+            //call other method for non-promotion
             addMove(moves, startRow, startCol, endRow, endCol);
         }
     }
