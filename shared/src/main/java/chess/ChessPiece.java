@@ -407,7 +407,7 @@ public class ChessPiece {
         int pieceCol = myPosition.getColumn();
         //north-east
         for(int row = pieceRow+1, col = pieceCol+1; row <= 8 && col <= 8; ++row, ++col) {
-            ChessPiece existingPiece = board.getPiece(new ChessPosition(pieceRow, col));
+            ChessPiece existingPiece = board.getPiece(new ChessPosition(row, col));
             if(existingPiece==null) {
                 moves.add(new ChessMove(new ChessPosition(pieceRow,pieceCol),
                         new ChessPosition(row,col), null));
@@ -447,7 +447,7 @@ public class ChessPiece {
         int pieceCol = myPosition.getColumn();
         //south-east
         for(int row = pieceRow-1, col = pieceCol+1; row >= 1 && col <= 8; --row, ++col) {
-            ChessPiece existingPiece = board.getPiece(new ChessPosition(pieceRow, col));
+            ChessPiece existingPiece = board.getPiece(new ChessPosition(row, col));
             if(existingPiece==null) {
                 moves.add(new ChessMove(new ChessPosition(pieceRow,pieceCol),
                         new ChessPosition(row,col), null));
@@ -487,7 +487,7 @@ public class ChessPiece {
         int pieceCol = myPosition.getColumn();
         //south-west
         for(int row = pieceRow-1, col = pieceCol-1; row >= 1 && col >= 1; --row, --col) {
-            ChessPiece existingPiece = board.getPiece(new ChessPosition(pieceRow, col));
+            ChessPiece existingPiece = board.getPiece(new ChessPosition(row, col));
             if(existingPiece==null) {
                 moves.add(new ChessMove(new ChessPosition(pieceRow,pieceCol),
                         new ChessPosition(row,col), null));
@@ -527,7 +527,7 @@ public class ChessPiece {
         int pieceCol = myPosition.getColumn();
         //north-west
         for(int row = pieceRow+1, col = pieceCol-1; row <= 8 && col >= 1; ++row, --col) {
-            ChessPiece existingPiece = board.getPiece(new ChessPosition(pieceRow, col));
+            ChessPiece existingPiece = board.getPiece(new ChessPosition(row, col));
             if(existingPiece==null) {
                 moves.add(new ChessMove(new ChessPosition(pieceRow,pieceCol),
                         new ChessPosition(row,col), null));
