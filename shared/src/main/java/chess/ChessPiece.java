@@ -76,15 +76,15 @@ public class ChessPiece {
      */
     public Collection<ChessMove> pieceMoves(ChessBoard board, ChessPosition myPosition) {
         //call helper function for each piece type to evaluate possible moves
-        switch (board.getPiece(myPosition).pieceType) {
-            case KING -> {return kingPieceMoves(board, myPosition);}
-            case QUEEN -> {return queenPieceMoves(board, myPosition);}
-            case ROOK -> {return rookPieceMoves(board, myPosition);}
-            case BISHOP -> {return bishopPieceMoves(board, myPosition);}
-            case KNIGHT -> {return knightPieceMoves(board, myPosition);}
-            case PAWN -> {return pawnPieceMoves(board, myPosition);}
-        }
-        return null;
+        return switch (board.getPiece(myPosition).pieceType) {
+            case KING -> kingPieceMoves(board, myPosition);
+            case QUEEN -> queenPieceMoves(board, myPosition);
+            case ROOK -> rookPieceMoves(board, myPosition);
+            case BISHOP -> bishopPieceMoves(board, myPosition);
+            case KNIGHT -> knightPieceMoves(board, myPosition);
+            case PAWN -> pawnPieceMoves(board, myPosition);
+            default -> null;
+        };
     }
 
     //// Individual piece move methods
