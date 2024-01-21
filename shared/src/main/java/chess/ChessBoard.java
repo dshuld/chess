@@ -64,12 +64,12 @@ public class ChessBoard {
     public void resetBoard() {
         for (int row = 1; row <= 8; ++row) {
             for (int col = 1; col <= 8; ++col) {
-                pieces[row][col] = null;
-                if(row==1) {
+                pieces[row-1][col-1] = null;
+                if(row==2) {
                     addPiece(new ChessPosition(row, col),
                             new ChessPiece(ChessGame.TeamColor.WHITE, ChessPiece.PieceType.PAWN));
                 }
-                if(row==6) {
+                if(row==7) {
                     addPiece(new ChessPosition(row, col),
                             new ChessPiece(ChessGame.TeamColor.BLACK, ChessPiece.PieceType.PAWN));
                 }
