@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Objects;
 
+import static java.lang.Math.abs;
+
 /**
  * Represents a single chess piece
  * <p>
@@ -156,81 +158,23 @@ public class ChessPiece {
         int pieceCol = myPosition.getColumn();
         ChessPiece existingPiece;
 
-        //manually check each potential location
-
-        //north-most
-        if (pieceRow+2 <= 8) {
-            //left
-            if (pieceCol-1 >= 1) {
-                existingPiece = board.getPiece(new ChessPosition(pieceRow+2,pieceCol-1));
-                if (existingPiece == null ||
-                        existingPiece.getTeamColor() != board.getPiece(myPosition).getTeamColor()) {
-                    addMove(moves, pieceRow, pieceCol, pieceRow+2, pieceCol-1);
-                }
-            }
-            //right
-            if (pieceCol+1 <= 8) {
-                existingPiece = board.getPiece(new ChessPosition(pieceRow+2,pieceCol+1));
-                if (existingPiece == null ||
-                        existingPiece.getTeamColor() != board.getPiece(myPosition).getTeamColor()) {
-                    addMove(moves, pieceRow, pieceCol, pieceRow+2, pieceCol+1);
-                }
-            }
-        }
-        //east-most
-        if (pieceCol+2 <= 8) {
-            //bottom
-            if (pieceRow-1 >= 1) {
-                existingPiece = board.getPiece(new ChessPosition(pieceRow-1,pieceCol+2));
-                if (existingPiece == null ||
-                        existingPiece.getTeamColor() != board.getPiece(myPosition).getTeamColor()) {
-                    addMove(moves, pieceRow, pieceCol, pieceRow-1, pieceCol+2);
-                }
-            }
-            //top
-            if (pieceRow+1 <= 8) {
-                existingPiece = board.getPiece(new ChessPosition(pieceRow+1,pieceCol+2));
-                if (existingPiece == null ||
-                        existingPiece.getTeamColor() != board.getPiece(myPosition).getTeamColor()) {
-                    addMove(moves, pieceRow, pieceCol, pieceRow+1, pieceCol+2);
-                }
-            }
-        }
-        //south-most
-        if (pieceRow-2 >= 1) {
-            //left
-            if (pieceCol-1 >= 1) {
-                existingPiece = board.getPiece(new ChessPosition(pieceRow-2,pieceCol-1));
-                if (existingPiece == null ||
-                        existingPiece.getTeamColor() != board.getPiece(myPosition).getTeamColor()) {
-                    addMove(moves, pieceRow, pieceCol, pieceRow-2, pieceCol-1);
-                }
-            }
-            //right
-            if (pieceCol+1 <= 8) {
-                existingPiece = board.getPiece(new ChessPosition(pieceRow-2,pieceCol+1));
-                if (existingPiece == null ||
-                        existingPiece.getTeamColor() != board.getPiece(myPosition).getTeamColor()) {
-                    addMove(moves, pieceRow, pieceCol, pieceRow-2, pieceCol+1);
-                }
-            }
-        }
-        //west-most
-        if (pieceCol-2 >= 1) {
-            //bottom
-            if (pieceRow-1 >= 1) {
-                existingPiece = board.getPiece(new ChessPosition(pieceRow-1,pieceCol-2));
-                if (existingPiece == null ||
-                        existingPiece.getTeamColor() != board.getPiece(myPosition).getTeamColor()) {
-                    addMove(moves, pieceRow, pieceCol, pieceRow-1, pieceCol-2);
-                }
-            }
-            //top
-            if (pieceRow+1 <= 8) {
-                existingPiece = board.getPiece(new ChessPosition(pieceRow+1,pieceCol-2));
-                if (existingPiece == null ||
-                        existingPiece.getTeamColor() != board.getPiece(myPosition).getTeamColor()) {
-                    addMove(moves, pieceRow, pieceCol, pieceRow+1, pieceCol-2);
+        for (int row = -2; row <= 2; ++row) {
+            if (row != 0) {
+                if ((pieceRow + row) >= 1 && (pieceRow + row) <= 8) {
+                    int col = (abs(row) == 1) ? 2 : 1;
+                    if ((pieceCol + col) >= 1 && (pieceCol + col) <= 8) {
+                        existingPiece = board.getPiece(new ChessPosition(pieceRow+row,pieceCol+col));
+                        if (existingPiece == null || existingPiece.getTeamColor() != this.getTeamColor()) {
+                            addMove(moves,pieceRow,pieceCol,pieceRow+row,pieceCol+col);
+                        }
+                    }
+                    col *= -1;
+                    if ((pieceCol + col) >= 1 && (pieceCol + col) <= 8) {
+                        existingPiece = board.getPiece(new ChessPosition(pieceRow+row,pieceCol+col));
+                        if (existingPiece == null || existingPiece.getTeamColor() != this.getTeamColor()) {
+                            addMove(moves,pieceRow,pieceCol,pieceRow+row,pieceCol+col);
+                        }
+                    }
                 }
             }
         }
