@@ -53,6 +53,26 @@ public class ChessGame {
         throw new RuntimeException("Not implemented");
     }
 
+    private void forceMove(ChessMove move, ChessBoard board) {
+        ChessPiece piece = board.getPiece(move.getStartPosition());
+        board.addPiece(move.getEndPosition(), piece);
+        if(move.getPromotionPiece()!=null) {
+            board.addPiece(move.getEndPosition(), new ChessPiece(piece.getTeamColor(), move.getPromotionPiece()));
+        }
+        board.addPiece(move.getStartPosition(),null);
+    }
+
+    private ChessBoard copyBoard(ChessBoard board) {
+        try {
+            ChessBoard copyBoard = (ChessBoard) board.clone();
+            return copyBoard;
+        }
+        catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     /**
      * Makes a move in a chess game
      *
