@@ -53,7 +53,7 @@ public class ChessGame {
         throw new RuntimeException("Not implemented");
     }
 
-    private void forceMove(ChessMove move, ChessBoard board) {
+    private void performMove(ChessMove move, ChessBoard board) {
         ChessPiece piece = board.getPiece(move.getStartPosition());
         board.addPiece(move.getEndPosition(), piece);
         if(move.getPromotionPiece()!=null) {
@@ -80,7 +80,18 @@ public class ChessGame {
      * @throws InvalidMoveException if move is invalid
      */
     public void makeMove(ChessMove move) throws InvalidMoveException {
-        throw new RuntimeException("Not implemented");
+        Collection<ChessMove> validMoves = validMoves(move.getStartPosition());
+        boolean found = false;
+        for (ChessMove m : validMoves) {
+            if (move == m) {
+                found = true;
+                break;
+            }
+        }
+        if (!found) {
+            throw new InvalidMoveException();
+        }
+        performMove(move, board);
     }
 
     /**
