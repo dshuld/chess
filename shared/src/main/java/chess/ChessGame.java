@@ -58,7 +58,7 @@ public class ChessGame {
         Collection<ChessMove> possibleMoves = piece.pieceMoves(board,startPosition);
         Collection<ChessMove> validMoves = new ArrayList<>();
         for (ChessMove move : possibleMoves) {
-            ChessBoard tempBoard = copyBoard(board);
+            ChessBoard tempBoard = new ChessBoard(board);
             performMove(move,tempBoard);
             if (!isInCheck(piece.getTeamColor(),tempBoard)) {
                 validMoves.add(move);
@@ -67,25 +67,14 @@ public class ChessGame {
         return validMoves;
     }
 
-    private ChessBoard copyBoard(ChessBoard board) {
-        try {
-            ChessBoard copyBoard = (ChessBoard) board.clone();
-            return copyBoard;
-        }
-        catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    private void performMove(ChessMove move, ChessBoard board) {
-        ChessPiece piece = board.getPiece(move.getStartPosition());
+    private void performMove(ChessMove move, ChessBoard b) {
+        ChessPiece piece = b.getPiece(move.getStartPosition());
         if (piece != null) {
-            board.addPiece(move.getEndPosition(), piece);
+            b.addPiece(move.getEndPosition(), piece);
             if (move.getPromotionPiece() != null) {
-                board.addPiece(move.getEndPosition(), new ChessPiece(piece.getTeamColor(), move.getPromotionPiece()));
+                b.addPiece(move.getEndPosition(), new ChessPiece(piece.getTeamColor(), move.getPromotionPiece()));
             }
-            board.addPiece(move.getStartPosition(), null);
+            b.addPiece(move.getStartPosition(), null);
         }
     }
 
