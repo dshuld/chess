@@ -89,12 +89,13 @@ public class ChessGame {
         if (validMoves != null) {
             boolean found = false;
             for (ChessMove m : validMoves) {
-                if (move == m) {
+                if (move.equals(m)) {
                     found = true;
                     break;
                 }
             }
-            if (!found || board.getPiece(move.getStartPosition()).getTeamColor() != getTeamTurn()) {
+            ChessPiece piece = board.getPiece(move.getStartPosition());
+            if (piece == null || !found || piece.getTeamColor() != getTeamTurn()) {
                 throw new InvalidMoveException();
             }
             performMove(move, board);
