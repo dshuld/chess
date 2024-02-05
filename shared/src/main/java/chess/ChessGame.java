@@ -99,6 +99,7 @@ public class ChessGame {
                 throw new InvalidMoveException();
             }
             performMove(move, board);
+            setTeamTurn(teamTurn==TeamColor.WHITE?TeamColor.BLACK:TeamColor.WHITE);
         }
         else {
             throw new InvalidMoveException();
