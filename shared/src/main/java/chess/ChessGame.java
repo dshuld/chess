@@ -116,16 +116,16 @@ public class ChessGame {
         return isInCheck(teamColor, board);
     }
 
-    private boolean isInCheck(TeamColor teamColor, ChessBoard board) {
+    private boolean isInCheck(TeamColor teamColor, ChessBoard b) {
         for (int row = 1; row <= 8; ++row) {
             for (int col = 1; col <= 8; ++col) {
                 ChessPosition position = new ChessPosition(row,col);
-                ChessPiece piece = board.getPiece(position);
+                ChessPiece piece = b.getPiece(position);
                 if (piece != null) {
                     if (piece.getTeamColor() != teamColor) {
-                        Collection<ChessMove> pieceMoves = piece.pieceMoves(board, position);
+                        Collection<ChessMove> pieceMoves = piece.pieceMoves(b, position);
                         for (ChessMove move : pieceMoves) {
-                            ChessPiece toCapture = board.getPiece(move.getEndPosition());
+                            ChessPiece toCapture = b.getPiece(move.getEndPosition());
                             if (toCapture != null) {
                                 if (toCapture.getPieceType() == ChessPiece.PieceType.KING) {
                                     return true;
@@ -160,6 +160,9 @@ public class ChessGame {
                     }
                 }
             }
+        }
+        else {
+            return false;
         }
         return true;
     }
