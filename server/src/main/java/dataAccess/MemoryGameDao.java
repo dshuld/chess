@@ -44,6 +44,7 @@ public class MemoryGameDao implements GameDao {
             if (g.gameID() == data.gameID()) {
                 game.remove(g);
                 game.add(data);
+                return;
             }
         }
     }

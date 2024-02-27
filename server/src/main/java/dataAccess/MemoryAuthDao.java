@@ -34,11 +34,25 @@ public class MemoryAuthDao implements AuthDao {
     }
 
     @Override
+    public AuthData getUser(AuthData data) {
+        for (AuthData a : auth) {
+            if(a.authtoken().equals(data.authtoken())) {
+                return a;
+            }
+        }
+        return null;
+    }
+
+    @Override
     public void deleteAuth(AuthData data) {
+        Set<AuthData> toRemove = new HashSet<>();
         for (AuthData a : auth) {
             if (a.username().equals(data.username())) {
-                auth.remove(a);
+                toRemove.add(a);
             }
+        }
+        for (AuthData a : toRemove) {
+            auth.remove(a);
         }
     }
 
