@@ -35,7 +35,11 @@ public class MemoryGameDao implements GameDao {
 
     @Override
     public Set<GameData> listGames() {
-        return game;
+        Set<GameData> games = new HashSet<>();
+        for (GameData g : game) {
+            games.add(new GameData(g.gameID(), g.whiteUsername(), g.blackUsername(), g.gameName(), null));
+        }
+        return games;
     }
 
     @Override
