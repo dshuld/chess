@@ -21,7 +21,8 @@ public class ListGamesHandler implements Handler {
     @Override
     public Object handle(Request req, Response res) {
         JsonConverter converter = JsonConverter.getInstance();
-        ListGamesRequest request = converter.fromJson(req.body(), ListGamesRequest.class);
+        String authToken = req.headers("authorization");
+        ListGamesRequest request = new ListGamesRequest(authToken);
         ListGamesService service = ListGamesService.getInstance();
         try {
             GameListResult result = service.listGames(request);
