@@ -30,7 +30,7 @@ public class RegisterService {
         if(username == null || password == null || email == null) {
             return new AuthResult(null, null, "Error: bad request");
         }
-        if(userDao.getUser(new UserData(request.username(), null, null)) != null) {
+        if(userDao.getUser(userData) != null) {
             return new AuthResult(null, null, "Error: already taken");
         }
         userDao.createUser(userData);
