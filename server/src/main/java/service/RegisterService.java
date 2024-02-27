@@ -3,7 +3,7 @@ package service;
 import model.AuthData;
 import model.UserData;
 import request.RegisterRequest;
-import result.RegisterResult;
+import result.AuthResult;
 import dataAccess.*;
 
 import java.util.UUID;
@@ -20,7 +20,7 @@ public class RegisterService {
         return instance;
     }
 
-    public RegisterResult register(RegisterRequest request) {
+    public AuthResult register(RegisterRequest request) {
         UserDao userDao = MemoryUserDao.getInstance();
         String username = request.username();
         String password = request.password();
@@ -28,10 +28,10 @@ public class RegisterService {
         UserData userData = new UserData(username, password, email);
 
         if(username == null || password == null || email == null) {
-            return new RegisterResult(null, null, "Error: bad request");
+            return new AuthResult(null, null, "Error: bad request");
         }
         if(userDao.getUser(new UserData(request.username(), null, null)) != null) {
-            return new RegisterResult(null, null, "Error: already taken");
+            return new AuthResult(null, null, "Error: already taken");
         }
         userDao.createUser(userData);
 
@@ -41,6 +41,6 @@ public class RegisterService {
 
         authDao.createAuth(authData);
 
-        return new RegisterResult(username, authToken, null);
+        return new AuthResult(username, authToken, null);
     }
 }

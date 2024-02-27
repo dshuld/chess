@@ -3,7 +3,7 @@ package handler;
 import jsonConverter.JsonConverter;
 import request.RegisterRequest;
 import service.RegisterService;
-import result.RegisterResult;
+import result.AuthResult;
 import spark.*;
 
 public class RegisterHandler implements Handler {
@@ -24,7 +24,7 @@ public class RegisterHandler implements Handler {
         RegisterRequest request = converter.fromJson(req.body(), RegisterRequest.class);
         RegisterService service = RegisterService.getInstance();
         try {
-            RegisterResult result = service.register(request);
+            AuthResult result = service.register(request);
             if (result.message() != null) {
                 if (result.message().equals("Error: bad request")) {
                     res.status(400);
@@ -40,7 +40,7 @@ public class RegisterHandler implements Handler {
         }
         catch (Exception e) {
             res.status(500);
-            return converter.toJson(new RegisterResult(null, null, "Error: "+e.toString()));
+            return converter.toJson(new AuthResult(null, null, "Error: "+e.toString()));
         }
     }
 }
