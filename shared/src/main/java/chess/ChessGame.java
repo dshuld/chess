@@ -178,9 +178,9 @@ public class ChessGame {
         if (teamColor != getTeamTurn() || isInCheck(teamColor)) {
             return false;
         }
-        for (int row = 1; row <= 8; ++row) {
-            for (int col = 1; col <= 8; ++col) {
-                ChessPosition position = new ChessPosition(row, col);
+        for (int r = 1; r <= 8; ++r) {
+            for (int c = 1; c <= 8; ++c) {
+                ChessPosition position = new ChessPosition(r, c);
                 Collection<ChessMove> validMoves = validMoves(position);
                 ChessPiece piece = board.getPiece(position);
                 if (piece != null) {
