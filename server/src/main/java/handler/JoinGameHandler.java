@@ -35,8 +35,6 @@ public class JoinGameHandler implements Handler {
                     res.status(401);
                 } else if (result.message().equals("Error: already taken")) {
                     res.status(403);
-                } else if (result.message().equals("Error: not found")) {
-                    res.status(404);
                 } else {
                     res.status(500);
                 }

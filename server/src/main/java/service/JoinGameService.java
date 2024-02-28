@@ -45,7 +45,7 @@ public class JoinGameService {
         GameData gameData = new GameData(request.gameID(), null, null, null, null);
         gameData = gameDao.getGame(gameData);
         if (gameData == null) {
-            return new Result("Error: not found");
+            return new Result("Error: bad request");
         }
 
         if (!(playerColor == null || playerColor.equals(""))) {
