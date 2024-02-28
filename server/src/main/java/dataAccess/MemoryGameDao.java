@@ -26,7 +26,7 @@ public class MemoryGameDao implements GameDao {
     @Override
     public GameData getGame(GameData data) {
         for (GameData g : game) {
-            if (g.gameID() == data.gameID()) {
+            if (g.gameID().equals(data.gameID())) {
                 return g;
             }
         }
@@ -45,7 +45,7 @@ public class MemoryGameDao implements GameDao {
     @Override
     public void updateGame(GameData data) {
         for (GameData g : game) {
-            if (g.gameID() == data.gameID()) {
+            if (g.gameID().equals(data.gameID())) {
                 game.remove(g);
                 game.add(data);
                 return;
