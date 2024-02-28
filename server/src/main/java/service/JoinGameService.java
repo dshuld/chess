@@ -48,7 +48,7 @@ public class JoinGameService {
             return new Result("Error: not found");
         }
 
-        if (playerColor != null || !playerColor.equals("")) {
+        if (!(playerColor == null || playerColor.equals(""))) {
             if (playerColor.equals("WHITE") && gameData.whiteUsername() == null) {
                 gameData = new GameData(gameData.gameID(), authData.username(),
                         gameData.blackUsername(), gameData.gameName(), new ChessGame());
