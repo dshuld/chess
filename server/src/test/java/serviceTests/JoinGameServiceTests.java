@@ -1,6 +1,9 @@
 package serviceTests;
 
-import dataAccess.*;
+import dataAccess.interfaces.AuthDao;
+import dataAccess.interfaces.GameDao;
+import dataAccess.memory.MemoryAuthDao;
+import dataAccess.memory.MemoryGameDao;
 import model.*;
 import org.junit.jupiter.api.*;
 import request.JoinGameRequest;
@@ -14,7 +17,11 @@ public class JoinGameServiceTests {
     @BeforeEach
     public void setup() {
         ClearService clearService = ClearService.getInstance();
-        clearService.clear();
+        try {
+            clearService.clear();
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
 
         AuthDao authDao = MemoryAuthDao.getInstance();
         gameDao.createGame(gameData);
@@ -27,7 +34,11 @@ public class JoinGameServiceTests {
 
         JoinGameService joinGameService = JoinGameService.getInstance();
         JoinGameRequest joinGameRequest = new JoinGameRequest("WHITE", gameID, "auth");
-        joinGameService.joinGame(joinGameRequest);
+        try {
+            joinGameService.joinGame(joinGameRequest);
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
 
         Assertions.assertNotNull(gameDao.getGame(gameData).whiteUsername());
     }

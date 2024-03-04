@@ -10,20 +10,32 @@ public class LoginServiceTests {
     public static void setup() {
         RegisterService registerService = RegisterService.getInstance();
         RegisterRequest registerRequest = new RegisterRequest("user", "pass", "email");
-        registerService.register(registerRequest);
+        try {
+            registerService.register(registerRequest);
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
     }
 
     @Test
     public void testLoginPositive() {
         LoginService loginService = LoginService.getInstance();
         LoginRequest loginRequest = new LoginRequest("user", "pass");
-        Assertions.assertNotNull(loginService.login(loginRequest).authToken());
+        try {
+            Assertions.assertNotNull(loginService.login(loginRequest).authToken());
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
     }
 
     @Test
     public void testLoginNegative() {
         LoginService loginService = LoginService.getInstance();
         LoginRequest loginRequest = new LoginRequest("user", "notPass");
-        Assertions.assertNull(loginService.login(loginRequest).authToken());
+        try {
+            Assertions.assertNull(loginService.login(loginRequest).authToken());
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
     }
 }

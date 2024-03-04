@@ -1,5 +1,6 @@
-package dataAccess;
+package dataAccess.memory;
 
+import dataAccess.interfaces.GameDao;
 import model.GameData;
 
 import java.util.HashSet;

@@ -1,10 +1,13 @@
 package service;
 
+import dataAccess.DataAccessException;
+import dataAccess.interfaces.AuthDao;
+import dataAccess.interfaces.UserDao;
+import dataAccess.sql.*;
 import model.AuthData;
 import model.UserData;
 import request.RegisterRequest;
 import result.AuthResult;
-import dataAccess.*;
 
 import java.util.UUID;
 
@@ -20,8 +23,8 @@ public class RegisterService {
         return instance;
     }
 
-    public AuthResult register(RegisterRequest request) {
-        UserDao userDao = MemoryUserDao.getInstance();
+    public AuthResult register(RegisterRequest request) throws DataAccessException {
+        UserDao userDao = SQLUserDao.getInstance();
         String username = request.username();
         String password = request.password();
         String email = request.email();
@@ -35,7 +38,7 @@ public class RegisterService {
         }
         userDao.createUser(userData);
 
-        AuthDao authDao = MemoryAuthDao.getInstance();
+        AuthDao authDao = SQLAuthDao.getInstance();
         String authToken = UUID.randomUUID().toString();
         AuthData authData = new AuthData(authToken, username);
 

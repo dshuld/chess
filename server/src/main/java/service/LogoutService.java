@@ -1,6 +1,8 @@
 package service;
 
-import dataAccess.*;
+import dataAccess.DataAccessException;
+import dataAccess.interfaces.AuthDao;
+import dataAccess.sql.*;
 import model.AuthData;
 import request.LogoutRequest;
 import result.Result;
@@ -17,8 +19,8 @@ public class LogoutService {
         return instance;
     }
 
-    public Result logout(LogoutRequest request) {
-        AuthDao authDao = MemoryAuthDao.getInstance();
+    public Result logout(LogoutRequest request) throws DataAccessException {
+        AuthDao authDao = SQLAuthDao.getInstance();
         String authToken = request.authToken();
         AuthData authData = new AuthData(authToken, null);
         authData = authDao.getUser(authData);

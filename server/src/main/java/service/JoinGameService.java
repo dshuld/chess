@@ -1,10 +1,10 @@
 package service;
 
 import chess.ChessGame;
-import dataAccess.AuthDao;
-import dataAccess.GameDao;
-import dataAccess.MemoryAuthDao;
-import dataAccess.MemoryGameDao;
+import dataAccess.DataAccessException;
+import dataAccess.interfaces.AuthDao;
+import dataAccess.interfaces.GameDao;
+import dataAccess.sql.*;
 import model.AuthData;
 import model.GameData;
 import request.JoinGameRequest;
@@ -22,7 +22,7 @@ public class JoinGameService {
         return instance;
     }
 
-    public Result joinGame(JoinGameRequest request) {
+    public Result joinGame(JoinGameRequest request) throws DataAccessException {
         if(request.gameID() == null) {
             return new Result("Error: bad request");
         }
@@ -33,7 +33,7 @@ public class JoinGameService {
             }
         }
 
-        AuthDao authDao = MemoryAuthDao.getInstance();
+        AuthDao authDao = SQLAuthDao.getInstance();
         String authToken = request.authToken();
         AuthData authData = new AuthData(authToken, null);
         authData = authDao.getUser(authData);
@@ -41,7 +41,7 @@ public class JoinGameService {
             return new Result("Error: unauthorized");
         }
 
-        GameDao gameDao = MemoryGameDao.getInstance();
+        GameDao gameDao = SQLGameDao.getInstance();
         GameData gameData = new GameData(request.gameID(), null, null, null, null);
         gameData = gameDao.getGame(gameData);
         if (gameData == null) {

@@ -1,7 +1,10 @@
 package service;
 
 import chess.ChessGame;
-import dataAccess.*;
+import dataAccess.DataAccessException;
+import dataAccess.interfaces.AuthDao;
+import dataAccess.interfaces.GameDao;
+import dataAccess.sql.*;
 import model.*;
 import request.CreateGameRequest;
 import result.GameResult;
@@ -20,12 +23,12 @@ public class CreateGameService {
         return instance;
     }
 
-    public GameResult createGame(CreateGameRequest request) {
+    public GameResult createGame(CreateGameRequest request) throws DataAccessException {
         if (request.gameName() == null) {
             return new GameResult(null, null, null, null,
                     "Error: bad request");
         }
-        AuthDao authDao = MemoryAuthDao.getInstance();
+        AuthDao authDao = SQLAuthDao.getInstance();
         String authToken = request.authToken();
         AuthData authData = new AuthData(authToken, null);
         authData = authDao.getUser(authData);
@@ -34,7 +37,7 @@ public class CreateGameService {
                     "Error: unauthorized");
         }
 
-        GameDao gameDao = MemoryGameDao.getInstance();
+        GameDao gameDao = SQLGameDao.getInstance();
 
         String gameName = request.gameName();
         GameData gameData;

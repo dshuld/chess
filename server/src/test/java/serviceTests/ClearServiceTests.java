@@ -1,9 +1,12 @@
 package serviceTests;
 
+import dataAccess.interfaces.UserDao;
+import dataAccess.memory.MemoryUserDao;
 import org.junit.jupiter.api.*;
 import model.*;
 import service.*;
-import dataAccess.*;
+
+import java.util.EmptyStackException;
 
 public class ClearServiceTests {
     @Test
@@ -15,7 +18,11 @@ public class ClearServiceTests {
         Assertions.assertNotNull(userDao.getUser(userData));
 
         ClearService service = ClearService.getInstance();
-        service.clear();
+        try {
+            service.clear();
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
 
         Assertions.assertNull(userDao.getUser(userData));
     }

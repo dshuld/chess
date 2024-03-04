@@ -1,6 +1,9 @@
 package service;
 
-import dataAccess.*;
+import dataAccess.DataAccessException;
+import dataAccess.interfaces.AuthDao;
+import dataAccess.interfaces.UserDao;
+import dataAccess.sql.*;
 import model.*;
 import request.LoginRequest;
 import result.AuthResult;
@@ -19,8 +22,8 @@ public class LoginService {
         return instance;
     }
 
-    public AuthResult login(LoginRequest request) {
-        UserDao userDao = MemoryUserDao.getInstance();
+    public AuthResult login(LoginRequest request) throws DataAccessException {
+        UserDao userDao = SQLUserDao.getInstance();
         String username = request.username();
         String password = request.password();
         UserData userData = new UserData(username, password, null);
@@ -29,7 +32,7 @@ public class LoginService {
             return new AuthResult(null, null, "Error: unauthorized");
         }
 
-        AuthDao authDao = MemoryAuthDao.getInstance();
+        AuthDao authDao = SQLAuthDao.getInstance();
         String authToken = UUID.randomUUID().toString();
         AuthData authData = new AuthData(authToken, username);
 

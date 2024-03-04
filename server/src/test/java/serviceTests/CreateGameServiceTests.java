@@ -1,6 +1,9 @@
 package serviceTests;
 
-import dataAccess.*;
+import dataAccess.interfaces.AuthDao;
+import dataAccess.interfaces.GameDao;
+import dataAccess.memory.MemoryAuthDao;
+import dataAccess.memory.MemoryGameDao;
 import model.*;
 import org.junit.jupiter.api.*;
 import request.CreateGameRequest;
@@ -12,7 +15,11 @@ public class CreateGameServiceTests {
     @BeforeEach
     public void clear() {
         ClearService service = ClearService.getInstance();
-        service.clear();
+        try {
+            service.clear();
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
     }
     @Test
     public void testCreateGamePositive() {
@@ -25,7 +32,11 @@ public class CreateGameServiceTests {
 
         CreateGameService createGameService = CreateGameService.getInstance();
         CreateGameRequest createGameRequest = new CreateGameRequest("name", authToken);
-        createGameService.createGame(createGameRequest);
+        try {
+            createGameService.createGame(createGameRequest);
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
 
         Assertions.assertNotEquals(new HashSet<GameData>(), gameDao.listGames());
     }

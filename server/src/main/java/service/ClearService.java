@@ -1,7 +1,11 @@
 package service;
 
+import dataAccess.DataAccessException;
+import dataAccess.interfaces.AuthDao;
+import dataAccess.interfaces.GameDao;
+import dataAccess.interfaces.UserDao;
+import dataAccess.sql.*;
 import result.Result;
-import dataAccess.*;
 
 public class ClearService {
     private static ClearService instance;
@@ -15,10 +19,10 @@ public class ClearService {
         return instance;
     }
 
-    public Result clear() {
-        UserDao userDao = MemoryUserDao.getInstance();
-        GameDao gameDao = MemoryGameDao.getInstance();
-        AuthDao authDao = MemoryAuthDao.getInstance();
+    public Result clear() throws DataAccessException {
+        UserDao userDao = SQLUserDao.getInstance();
+        GameDao gameDao = SQLGameDao.getInstance();
+        AuthDao authDao = SQLAuthDao.getInstance();
         userDao.clear();
         gameDao.clear();
         authDao.clear();

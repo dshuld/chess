@@ -1,7 +1,5 @@
 package handler;
 
-import dataAccess.AuthDao;
-import dataAccess.MemoryAuthDao;
 import spark.Request;
 import spark.Response;
 

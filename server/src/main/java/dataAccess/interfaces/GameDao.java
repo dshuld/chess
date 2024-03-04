@@ -1,4 +1,4 @@
-package dataAccess;
+package dataAccess.interfaces;
 
 import model.GameData;
 

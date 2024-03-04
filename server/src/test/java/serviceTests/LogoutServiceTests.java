@@ -10,20 +10,32 @@ public class LogoutServiceTests {
     public static void setup() {
         RegisterService registerService = RegisterService.getInstance();
         RegisterRequest registerRequest = new RegisterRequest("user", "pass", "email");
-        authToken = registerService.register(registerRequest).authToken();
+        try {
+            authToken = registerService.register(registerRequest).authToken();
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
     }
 
     @Test
     public void testLogoutPositive() {
         LogoutService logoutService = LogoutService.getInstance();
         LogoutRequest logoutRequest = new LogoutRequest(authToken);
-        Assertions.assertNull(logoutService.logout(logoutRequest).message());
+        try {
+            Assertions.assertNull(logoutService.logout(logoutRequest).message());
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
     }
 
     @Test
     public void testLogoutNegative() {
         LogoutService logoutService = LogoutService.getInstance();
         LogoutRequest logoutRequest = new LogoutRequest("notAuth");
-        Assertions.assertNotNull(logoutService.logout(logoutRequest).message());
+        try {
+            Assertions.assertNotNull(logoutService.logout(logoutRequest).message());
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
     }
 }

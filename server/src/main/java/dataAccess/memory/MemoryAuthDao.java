@@ -1,5 +1,6 @@
-package dataAccess;
+package dataAccess.memory;
 
+import dataAccess.interfaces.AuthDao;
 import model.AuthData;
 
 import java.util.HashSet;
@@ -21,16 +22,6 @@ public class MemoryAuthDao implements AuthDao {
     @Override
     public void createAuth(AuthData data) {
         auth.add(data);
-    }
-
-    @Override
-    public AuthData getAuth(AuthData data) {
-        for (AuthData a : auth) {
-            if(a.username().equals(data.username())) {
-                return a;
-            }
-        }
-        return null;
     }
 
     @Override

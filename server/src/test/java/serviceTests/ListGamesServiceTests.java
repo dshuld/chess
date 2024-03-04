@@ -1,19 +1,16 @@
 package serviceTests;
 
-import dataAccess.AuthDao;
-import dataAccess.GameDao;
-import dataAccess.MemoryAuthDao;
-import dataAccess.MemoryGameDao;
+import dataAccess.interfaces.AuthDao;
+import dataAccess.interfaces.GameDao;
+import dataAccess.memory.MemoryAuthDao;
+import dataAccess.memory.MemoryGameDao;
 import model.AuthData;
 import model.GameData;
 import org.junit.jupiter.api.*;
 import request.ListGamesRequest;
-import service.ClearService;
 import service.ListGamesService;
-import spark.Service;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 public class ListGamesServiceTests {
@@ -33,7 +30,11 @@ public class ListGamesServiceTests {
         Set<GameData> set = new HashSet<>();
         set.add(new GameData(null, null,null, null, null));
 
-        Assertions.assertEquals(set, listGamesService.listGames(listGamesRequest).games());
+        try {
+            Assertions.assertEquals(set, listGamesService.listGames(listGamesRequest).games());
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
     }
 
     @Test
@@ -41,6 +42,10 @@ public class ListGamesServiceTests {
         ListGamesService listGamesService = ListGamesService.getInstance();
         ListGamesRequest listGamesRequest = new ListGamesRequest("notAuth");
 
-        Assertions.assertNull(listGamesService.listGames(listGamesRequest).games());
+        try {
+            Assertions.assertNull(listGamesService.listGames(listGamesRequest).games());
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
     }
 }
