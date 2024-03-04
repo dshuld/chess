@@ -2,6 +2,7 @@ package dataAccess.sql;
 
 import dataAccess.DataAccessException;
 import dataAccess.interfaces.GameDao;
+import dataAccess.interfaces.UserDao;
 import model.GameData;
 
 import java.util.HashSet;
@@ -26,6 +27,7 @@ public class SQLGameDao extends ConnectionManager implements GameDao {
     };
 
     private SQLGameDao() throws DataAccessException {
+        UserDao dependency = SQLUserDao.getInstance();
         configureDatabase(createStatements);
     }
 

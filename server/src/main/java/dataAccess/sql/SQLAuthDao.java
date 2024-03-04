@@ -2,6 +2,7 @@ package dataAccess.sql;
 
 import dataAccess.DataAccessException;
 import dataAccess.interfaces.AuthDao;
+import dataAccess.interfaces.UserDao;
 import model.AuthData;
 
 import java.util.HashSet;
@@ -23,6 +24,7 @@ public class SQLAuthDao extends ConnectionManager implements AuthDao {
     };
 
     private SQLAuthDao() throws DataAccessException {
+        UserDao dependency = SQLUserDao.getInstance();
         configureDatabase(createStatements);
     }
 
