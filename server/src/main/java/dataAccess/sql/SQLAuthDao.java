@@ -17,8 +17,7 @@ public class SQLAuthDao extends ConnectionManager implements AuthDao {
               `id` int NOT NULL AUTO_INCREMENT,
               `authtoken` varchar(256) NOT NULL,
               `username` varchar(256) NOT NULL,
-              PRIMARY KEY (`id`),
-              FOREIGN KEY (`username`) REFERENCES `user`(`username`) ON UPDATE CASCADE ON DELETE CASCADE
+              PRIMARY KEY (`id`)
             )
             """
     };

@@ -23,9 +23,7 @@ public class SQLGameDao extends ConnectionManager implements GameDao {
               `blackUsername` varchar(256),
               `gameName` varchar(256),
               `game` varchar(2048),
-              PRIMARY KEY (`gameID`),
-              FOREIGN KEY (`whiteUsername`) REFERENCES `user`(`username`) ON UPDATE CASCADE ON DELETE CASCADE,
-              FOREIGN KEY (`blackUsername`) REFERENCES `user`(`username`) ON UPDATE CASCADE ON DELETE CASCADE
+              PRIMARY KEY (`gameID`)
             )
             """
     };
