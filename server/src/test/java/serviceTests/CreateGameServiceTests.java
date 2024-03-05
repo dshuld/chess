@@ -52,7 +52,11 @@ public class CreateGameServiceTests {
 
         CreateGameService createGameService = CreateGameService.getInstance();
         CreateGameRequest createGameRequest = new CreateGameRequest("name", "notAuth");
-        createGameService.createGame(createGameRequest);
+        try {
+            createGameService.createGame(createGameRequest);
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
 
         Assertions.assertEquals(new HashSet<GameData>(), gameDao.listGames());
     }

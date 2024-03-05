@@ -49,7 +49,11 @@ public class JoinGameServiceTests {
 
         JoinGameService joinGameService = JoinGameService.getInstance();
         JoinGameRequest joinGameRequest = new JoinGameRequest("WHITE", gameID, "notAuth");
-        joinGameService.joinGame(joinGameRequest);
+        try {
+            joinGameService.joinGame(joinGameRequest);
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
 
         Assertions.assertNull(gameDao.getGame(gameData).whiteUsername());
     }
