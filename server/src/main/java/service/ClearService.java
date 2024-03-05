@@ -20,12 +20,12 @@ public class ClearService {
     }
 
     public Result clear() throws DataAccessException {
+        UserDao userDao = SQLUserDao.getInstance();
         GameDao gameDao = SQLGameDao.getInstance();
         AuthDao authDao = SQLAuthDao.getInstance();
-        UserDao userDao = SQLUserDao.getInstance();
-        userDao.clear();
-        gameDao.clear();
         authDao.clear();
+        gameDao.clear();
+        userDao.clear();
         return new Result(null);
     }
 }
