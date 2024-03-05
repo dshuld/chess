@@ -5,6 +5,7 @@ import dataAccess.interfaces.AuthDao;
 import dataAccess.interfaces.UserDao;
 import dataAccess.sql.*;
 import model.*;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import request.LoginRequest;
 import result.AuthResult;
 
@@ -23,12 +24,13 @@ public class LoginService {
     }
 
     public AuthResult login(LoginRequest request) throws DataAccessException {
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         UserDao userDao = SQLUserDao.getInstance();
         String username = request.username();
         String password = request.password();
         UserData userData = new UserData(username, password, null);
 
-        if(userDao.getUser(userData) == null || !userDao.getUser(userData).password().equals(password)) {
+        if(userDao.getUser(userData) == null || !encoder.matches(password, userDao.getUser(userData).password())) {
             return new AuthResult(null, null, "Error: unauthorized");
         }
 
