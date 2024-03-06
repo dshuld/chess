@@ -1,8 +1,8 @@
 package dataAccess.sql;
 
 import dataAccess.DataAccessException;
+import dataAccess.DatabaseManager;
 import dataAccess.interfaces.UserDao;
-import model.AuthData;
 import model.UserData;
 
 import java.sql.ResultSet;

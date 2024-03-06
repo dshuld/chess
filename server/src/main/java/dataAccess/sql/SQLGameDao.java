@@ -2,6 +2,7 @@ package dataAccess.sql;
 
 import chess.ChessGame;
 import dataAccess.DataAccessException;
+import dataAccess.DatabaseManager;
 import dataAccess.interfaces.GameDao;
 import dataAccess.interfaces.UserDao;
 import model.GameData;
