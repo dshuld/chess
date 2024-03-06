@@ -156,25 +156,14 @@ public class ChessPiece {
         Collection<ChessMove> moves = new ArrayList<>();
         int pieceRow = myPosition.getRow();
         int pieceCol = myPosition.getColumn();
-        ChessPiece existingPiece;
 
         for (int row = -2; row <= 2; ++row) {
             if (row != 0) {
                 if ((pieceRow + row) >= 1 && (pieceRow + row) <= 8) {
                     int col = (abs(row) == 1) ? 2 : 1;
-                    if ((pieceCol + col) >= 1 && (pieceCol + col) <= 8) {
-                        existingPiece = board.getPiece(new ChessPosition(pieceRow+row,pieceCol+col));
-                        if (existingPiece == null || existingPiece.getTeamColor() != this.getTeamColor()) {
-                            addMove(moves,pieceRow,pieceCol,pieceRow+row,pieceCol+col);
-                        }
-                    }
+                    addMoveIfValid(board, moves, pieceRow, pieceCol, row, col);
                     col *= -1;
-                    if ((pieceCol + col) >= 1 && (pieceCol + col) <= 8) {
-                        existingPiece = board.getPiece(new ChessPosition(pieceRow+row,pieceCol+col));
-                        if (existingPiece == null || existingPiece.getTeamColor() != this.getTeamColor()) {
-                            addMove(moves,pieceRow,pieceCol,pieceRow+row,pieceCol+col);
-                        }
-                    }
+                    addMoveIfValid(board, moves, pieceRow, pieceCol, row, col);
                 }
             }
         }
@@ -295,14 +284,7 @@ public class ChessPiece {
         int pieceCol = myPosition.getColumn();
         //north
         for (int row = pieceRow+1; row <= 8; ++row) {
-            ChessPiece existingPiece = board.getPiece(new ChessPosition(row, pieceCol));
-            if(existingPiece==null) {
-                addMove(moves, pieceRow, pieceCol, row, pieceCol);
-            }
-            else {
-                if (existingPiece.getTeamColor() != this.getTeamColor()) {
-                    addMove(moves, pieceRow, pieceCol, row, pieceCol);
-                }
+            if (addMoveIfValidCheckCollision(moves, board, pieceRow, pieceCol, row, pieceCol)) {
                 break;
             }
         }
@@ -313,14 +295,7 @@ public class ChessPiece {
         int pieceCol = myPosition.getColumn();
         //north-east
         for(int row = pieceRow+1, col = pieceCol+1; row <= 8 && col <= 8; ++row, ++col) {
-            ChessPiece existingPiece = board.getPiece(new ChessPosition(row, col));
-            if(existingPiece==null) {
-                addMove(moves, pieceRow, pieceCol, row, col);
-            }
-            else {
-                if (existingPiece.getTeamColor() != this.getTeamColor()) {
-                    addMove(moves, pieceRow, pieceCol, row, col);
-                }
+            if (addMoveIfValidCheckCollision(moves, board, pieceRow, pieceCol, row, col)) {
                 break;
             }
         }
@@ -331,14 +306,7 @@ public class ChessPiece {
         int pieceCol = myPosition.getColumn();
         //east
         for (int col = pieceCol+1; col <= 8; ++col) {
-            ChessPiece existingPiece = board.getPiece(new ChessPosition(pieceRow, col));
-            if(existingPiece==null) {
-                addMove(moves, pieceRow, pieceCol, pieceRow, col);
-            }
-            else {
-                if (existingPiece.getTeamColor() != this.getTeamColor()) {
-                    addMove(moves, pieceRow, pieceCol, pieceRow, col);
-                }
+            if (addMoveIfValidCheckCollision(moves, board, pieceRow, pieceCol, pieceRow, col)) {
                 break;
             }
         }
@@ -349,14 +317,7 @@ public class ChessPiece {
         int pieceCol = myPosition.getColumn();
         //south-east
         for(int row = pieceRow-1, col = pieceCol+1; row >= 1 && col <= 8; --row, ++col) {
-            ChessPiece existingPiece = board.getPiece(new ChessPosition(row, col));
-            if(existingPiece==null) {
-                addMove(moves, pieceRow, pieceCol, row, col);
-            }
-            else {
-                if (existingPiece.getTeamColor() != this.getTeamColor()) {
-                    addMove(moves, pieceRow, pieceCol, row, col);
-                }
+            if (addMoveIfValidCheckCollision(moves, board, pieceRow, pieceCol, row, col)) {
                 break;
             }
         }
@@ -367,14 +328,7 @@ public class ChessPiece {
         int pieceCol = myPosition.getColumn();
         //south
         for (int row = pieceRow-1; row >= 1; --row) {
-            ChessPiece existingPiece = board.getPiece(new ChessPosition(row, pieceCol));
-            if(existingPiece==null) {
-                addMove(moves, pieceRow, pieceCol, row, pieceCol);
-            }
-            else {
-                if (existingPiece.getTeamColor() != this.getTeamColor()) {
-                    addMove(moves, pieceRow, pieceCol, row, pieceCol);
-                }
+            if (addMoveIfValidCheckCollision(moves, board, pieceRow, pieceCol, row, pieceCol)) {
                 break;
             }
         }
@@ -385,14 +339,7 @@ public class ChessPiece {
         int pieceCol = myPosition.getColumn();
         //south-west
         for(int row = pieceRow-1, col = pieceCol-1; row >= 1 && col >= 1; --row, --col) {
-            ChessPiece existingPiece = board.getPiece(new ChessPosition(row, col));
-            if(existingPiece==null) {
-                addMove(moves, pieceRow, pieceCol, row, col);
-            }
-            else {
-                if (existingPiece.getTeamColor() != this.getTeamColor()) {
-                    addMove(moves, pieceRow, pieceCol, row, col);
-                }
+            if (addMoveIfValidCheckCollision(moves, board, pieceRow, pieceCol, row, col)) {
                 break;
             }
         }
@@ -403,14 +350,7 @@ public class ChessPiece {
         int pieceCol = myPosition.getColumn();
         //west
         for (int col = pieceCol-1; col >= 1; --col) {
-            ChessPiece existingPiece = board.getPiece(new ChessPosition(pieceRow, col));
-            if(existingPiece==null) {
-                addMove(moves, pieceRow, pieceCol, pieceRow, col);
-            }
-            else {
-                if (existingPiece.getTeamColor() != this.getTeamColor()) {
-                    addMove(moves, pieceRow, pieceCol, pieceRow, col);
-                }
+            if (addMoveIfValidCheckCollision(moves, board, pieceRow, pieceCol, pieceRow, col)) {
                 break;
             }
         }
@@ -421,20 +361,37 @@ public class ChessPiece {
         int pieceCol = myPosition.getColumn();
         //north-west
         for(int row = pieceRow+1, col = pieceCol-1; row <= 8 && col >= 1; ++row, --col) {
-            ChessPiece existingPiece = board.getPiece(new ChessPosition(row, col));
-            if(existingPiece==null) {
-                addMove(moves, pieceRow, pieceCol, row, col);
-            }
-            else {
-                if (existingPiece.getTeamColor() != this.getTeamColor()) {
-                    addMove(moves, pieceRow, pieceCol, row, col);
-                }
+            if (addMoveIfValidCheckCollision(moves, board, pieceRow, pieceCol, row, col)) {
                 break;
             }
         }
     }
 
     ////Helper functions for adding moves
+
+    private void addMoveIfValid(ChessBoard board, Collection<ChessMove> moves, int pieceRow, int pieceCol, int row, int col) {
+        ChessPiece existingPiece;
+        if ((pieceCol + col) >= 1 && (pieceCol + col) <= 8) {
+            existingPiece = board.getPiece(new ChessPosition(pieceRow + row, pieceCol + col));
+            if (existingPiece == null || existingPiece.getTeamColor() != this.getTeamColor()) {
+                addMove(moves, pieceRow, pieceCol, pieceRow + row, pieceCol + col);
+            }
+        }
+    }
+
+    private boolean addMoveIfValidCheckCollision(Collection<ChessMove> moves, ChessBoard board, int pieceRow, int pieceCol, int row, int col) {
+        ChessPiece existingPiece = board.getPiece(new ChessPosition(row, col));
+        if(existingPiece==null) {
+            addMove(moves, pieceRow, pieceCol, row, col);
+        }
+        else {
+            if (existingPiece.getTeamColor() != this.getTeamColor()) {
+                addMove(moves, pieceRow, pieceCol, row, col);
+            }
+            return true;
+        }
+        return false;
+    }
 
     private void addMove(Collection<ChessMove> moves, int startRow, int startCol, int endRow, int endCol) {
         moves.add(new ChessMove(new ChessPosition(startRow,startCol),
