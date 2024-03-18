@@ -67,6 +67,8 @@ public class ChessBoard implements Cloneable{
         return pieces[position.getRow()-1][position.getColumn()-1];
     }
 
+    public ChessPiece[][] getPieces() {return pieces;}
+
     /**
      * Sets the board to the default starting board
      * (How the game of chess normally starts)
