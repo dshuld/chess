@@ -121,8 +121,9 @@ public class ChessBoard {
     }
 
     private void nextLine() {
-        System.out.print(RESET_TEXT_BOLD_FAINT);
-        System.out.print(RESET_TEXT_COLOR);
-        System.out.println(RESET_BG_COLOR);
+//        System.out.print(RESET_TEXT_BOLD_FAINT);
+//        System.out.print(RESET_TEXT_COLOR);
+//        System.out.println(RESET_BG_COLOR);
+        System.out.println(RESET_ALL_FORMATTING);
     }
 }
