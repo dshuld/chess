@@ -41,7 +41,7 @@ public class ServerFacade {
 
     public GameResult createGame(CreateGameRequest request) {
         try {
-            return http.makeRequest("POST", urlString + "/game", request, authToken, GameResult.class);
+            return http.makeRequest("POST", urlString + "/game", request, request.authToken(), GameResult.class);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -50,7 +50,7 @@ public class ServerFacade {
 
     public Result joinGame(JoinGameRequest request) {
         try {
-            return http.makeRequest("PUT", urlString + "/game", request, authToken, Result.class);
+            return http.makeRequest("PUT", urlString + "/game", request, request.authToken(), Result.class);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -59,7 +59,7 @@ public class ServerFacade {
 
     public GameListResult listGames(ListGamesRequest request) {
         try {
-            return http.makeRequest("GET", urlString + "/game", request, authToken, GameListResult.class);
+            return http.makeRequest("GET", urlString + "/game", request, request.authToken(), GameListResult.class);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -77,7 +77,7 @@ public class ServerFacade {
 
     public Result logout(LogoutRequest request) {
         try {
-            return http.makeRequest("DELETE", urlString + "/session", request, authToken, Result.class);
+            return http.makeRequest("DELETE", urlString + "/session", request, request.authToken(), Result.class);
         } catch (Exception e) {
             e.printStackTrace();
         }
