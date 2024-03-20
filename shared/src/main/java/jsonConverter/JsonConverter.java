@@ -2,6 +2,8 @@ package jsonConverter;
 
 import com.google.gson.Gson;
 
+import java.io.InputStreamReader;
+
 public class JsonConverter {
     private static JsonConverter instance;
     private Gson serializer;
@@ -23,5 +25,9 @@ public class JsonConverter {
 
     public <T> T fromJson(String json, Class<T>  type) {
         return serializer.fromJson(json, type);
+    }
+
+    public <T> T fromJson(InputStreamReader reader, Class<T>  type) {
+        return serializer.fromJson(reader, type);
     }
 }
