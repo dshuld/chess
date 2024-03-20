@@ -33,12 +33,15 @@ public class HTTPCommunicator {
                 connection.addRequestProperty("Authorization", authToken);
             }
 
+            connection.setRequestProperty("Content-Type", "application/json");
+
             connection.connect();
 
             if(doesOutput(type)) {
                 try (OutputStream requestBody = connection.getOutputStream();) {
-                    OutputStreamWriter writer = new OutputStreamWriter(requestBody);
-                    writer.write(converter.toJson(request));
+                    String json = converter.toJson(request);
+                    requestBody.write(json.getBytes());
+                    requestBody.flush();
                 }
             }
 
