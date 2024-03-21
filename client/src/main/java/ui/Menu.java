@@ -44,7 +44,7 @@ public class Menu {
         boolean valid = false;
         while (!valid) {
             print("\nCommand: ");
-            String cmd = sc.nextLine().toLowerCase();
+            String cmd = sc.nextLine().toLowerCase().trim();
             valid = true;
             switch (cmd) {
                 case "login" -> login();
@@ -121,7 +121,7 @@ public class Menu {
         boolean valid = false;
         while (!valid) {
             print("\nCommand: ");
-            String cmd = sc.nextLine().toLowerCase();
+            String cmd = sc.nextLine().toLowerCase().trim();
             valid = true;
             switch (cmd) {
                 case "list games" -> listGames();
@@ -147,25 +147,29 @@ public class Menu {
             println("\n" + result.message());
         }
         else {
-            println("\t#\tName\tWhite\tBlack");
+            if(games.isEmpty()) {
+                println("No games! Create one to play!");
+            }
+            else {
+                println("\t#\tName\tWhite\tBlack");
 
-            gameList = new HashMap<>();
-            int count = 0;
+                gameList = new HashMap<>();
+                int count = 0;
 
-            for (GameData game : games) {
-                ++count;
-                gameList.put(count, game.gameID());
-                println("\t" + count + "\t" + game.gameName() + "\t"
-                        + ((game.whiteUsername()==null)?"-----":game.whiteUsername()) + "\t"
-                        + ((game.blackUsername()==null)?"-----":game.blackUsername()));
+                for (GameData game : games) {
+                    ++count;
+                    gameList.put(count, game.gameID());
+                    println("\t" + count + "\t" + game.gameName() + "\t"
+                            + ((game.whiteUsername() == null) ? "-----" : game.whiteUsername()) + "\t"
+                            + ((game.blackUsername() == null) ? "-----" : game.blackUsername()));
+                }
             }
         }
     }
 
     private void createGame() {
-        println("Enter a game name: ");
-        String name = sc.next();
-        sc.nextLine();
+        print("Enter a game name: ");
+        String name = sc.nextLine();
 
         CreateGameRequest request = new CreateGameRequest(name, serverFacade.getAuthToken());
         GameResult result = serverFacade.createGame(request);

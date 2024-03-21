@@ -49,6 +49,7 @@ public class CreateGameService {
 
         gameDao.createGame(gameData);
 
-        return new GameResult(gameData.gameID(), null, null,null, null);
+        return new GameResult(gameData.gameID(), gameData.whiteUsername(), gameData.blackUsername(),
+                gameData.gameName(), null);
     }
 }
